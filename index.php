@@ -9,7 +9,7 @@ include_once("db.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD İŞLEMLERİ</title>
-    <!-- Bootstrap CSS ve jQuery ekleyin -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -61,7 +61,7 @@ include_once("db.php");
 
                                 <form class="mx-1" id="deleteForm" action="islemler.php" method="post">
                                     <input type="hidden" name="calisan_sil" value="<?php echo $calisanBilgileri['id']; ?>">
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="showdelete(<?= htmlspecialchars($calisanBilgileri['id']); ?>)"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="personelSil(<?= htmlspecialchars($calisanBilgileri['id']); ?>)"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>
                         </td>
@@ -77,18 +77,16 @@ include_once("db.php");
         </table>
     </div>
 
-    <!-- Ekleme Modalı -->
+    <!-- Personel Ekle Popup başlangıç -->
     <div class="modal" id="addModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <!-- Modal Başlık -->
                 <div class="modal-header">
                     <h4 class="modal-title">Yeni Kullanıcı Ekle</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- Modal Gövde -->
                 <div class="modal-body">
                     <form id="personelForm">
                         <div class="form-row">
@@ -119,7 +117,6 @@ include_once("db.php");
                     </form>
                 </div>
 
-                <!-- Modal Alt -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                 </div>
@@ -127,7 +124,7 @@ include_once("db.php");
             </div>
         </div>
     </div>
-
+<!-- Personel Ekle Popup Son -->
 
 
 
@@ -138,7 +135,9 @@ include_once("db.php");
 
 
 <script>
-    function showdelete(id) {
+        // Personel Silme Sweetalert ve post işlemi
+
+    function personelSil(id) {
         Swal.fire({
             title: 'Emin Misin?',
             text: " Bu Kaydın Tamamen Silinmesini Onaylıyor Musunuz?",
@@ -150,7 +149,7 @@ include_once("db.php");
             cancelButtonText: 'İptal'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Kullanıcı 'Evet' tuşuna bastığında POST isteği yap
+                // Kullanıcı eveet tuşuna bastığında POST isteği yap
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "islemler.php", true);
                 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -174,7 +173,7 @@ include_once("db.php");
                         }
                     }
                 };
-                xhr.send("calisan_sil=" + id); // Bu satırda POST verilerini gönderiyorsunuz.
+                xhr.send("calisan_sil=" + id);
             } else if (result.isDenied) {
                 Swal.fire('Silinmedi', '', 'info');
             }
@@ -183,11 +182,10 @@ include_once("db.php");
 </script>
 
 <script>
+    // Personel Ekleme Sweetalert ve post işlemi
     function personelEkle() {
-        // Form verilerini al
         var formData = new FormData(document.getElementById("personelForm"));
 
-        // AJAX ile form gönderimi
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "islemler.php", true);
         xhr.onreadystatechange = function() {
@@ -210,7 +208,6 @@ include_once("db.php");
             }
         };
 
-        // Gönderilecek form verileri
         xhr.send(formData);
     }
 </script>

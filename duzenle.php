@@ -64,12 +64,12 @@ if (isset($_POST['calisan_id'])) {
 
 </html>
 
+
 <script>
+    // Personel Güncelleme sweetalert ve post işlemleri
 function personelDuzenle() {
-    // Form verilerini al
     var formData = new FormData(document.getElementById("personelDuzenleForm"));
 
-    // AJAX ile form gönderimi
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "islemler.php", true);
     xhr.onreadystatechange = function () {
@@ -78,7 +78,6 @@ function personelDuzenle() {
                 var responseText = xhr.responseText;
                 if (responseText === 'success') {
                     Swal.fire('Güncellendi!', '', 'success').then(() => {
-                        // Güncelleme başarılı olduğunda index.php'ye yönlendirme
                         window.location.href = 'index.php';
                     });
                 } else if (responseText.startsWith('failure')) {
@@ -92,7 +91,6 @@ function personelDuzenle() {
         }
     };
 
-    // Gönderilecek form verileri
     xhr.send(formData);
 }
 </script>
